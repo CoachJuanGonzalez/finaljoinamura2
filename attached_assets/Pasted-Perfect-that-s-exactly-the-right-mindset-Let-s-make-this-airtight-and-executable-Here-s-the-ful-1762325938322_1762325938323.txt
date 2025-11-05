@@ -1,0 +1,174 @@
+Perfect — that’s exactly the right mindset. Let’s make this airtight and executable.
+
+Here’s the full step-by-step roadmap for building ALIGN on Replit — from zero to a live, testable app people can use at your event and later scale.
+
+
+---
+
+🧭 OVERVIEW
+
+You’ll build in two layers:
+
+1. Landing Page (Public Front Door) – where people see the brand, understand it, and sign up / join.
+
+
+2. Application (Inside Experience) – where users actually create profiles, join rooms, and interact.
+
+
+
+Both live under one Replit project (or two if you prefer separation later).
+
+
+---
+
+🪜 STEP-BY-STEP PLAN
+
+Step 1 – Create the Replit Project
+
+In Replit, click “Create → HTML/CSS/JS” project.
+
+Name it align or align-app.
+
+Paste the HTML from the document I gave you into index.html.
+
+Click Run → confirm the landing page renders correctly.
+✅ Now you have your marketing + signup layer.
+
+
+
+---
+
+Step 2 – Add the “Web App Core” (User Rooms & Profiles)
+
+You’ll now extend it into an actual Progressive Web App (PWA).
+
+2.1 – Create a sub-folder called /app
+
+Inside /app you’ll build:
+
+index.html — the app interface
+
+script.js — logic
+
+style.css — reuse Tailwind via CDN
+
+
+2.2 – Use Firebase (Free backend)
+
+Go to firebase.google.com, create a free project “ALIGN”.
+
+Enable Authentication (Email + Google) and Firestore Database.
+
+Copy the config snippet → paste into your script.js.
+
+
+This gives you:
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+Then users can:
+
+Sign in
+
+Create a profile { name, offer, ask, links, room }
+
+Join a “Room” document
+
+
+✅ This turns ALIGN from a static page into a live event network.
+
+
+---
+
+Step 3 – Link the Landing Page → App
+
+On the landing page buttons (“Join Room”, “Get ALIGN”), set the link:
+
+<a href="/app/index.html">Open ALIGN App</a>
+
+Now your front site leads directly into the live app experience.
+
+
+---
+
+Step 4 – Add QR Connect (optional now)
+
+Use a simple JS library like qrcodejs:
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+<div id="qrcode"></div>
+<script>new QRCode(document.getElementById("qrcode"), userProfileURL);</script>
+
+That generates each user’s QR automatically for others to scan and connect.
+
+
+---
+
+Step 5 – Polish the Flow
+
+1. Landing page → Join → /app
+
+
+2. User logs in, fills their profile (Offer, Ask, Links).
+
+
+3. Chooses or joins event “Room”.
+
+
+4. Sees feed of others (Firestore collection).
+
+
+5. Can add daily action logs.
+
+
+6. Leaderboard sorts by streak count.
+
+
+
+
+---
+
+Step 6 – Deploy & Share
+
+Click “Deploy” in Replit → Shareable URL (e.g., https://align.yourname.repl.co).
+
+Print QR code of that link → attendees scan → open the landing page → enter app.
+
+
+
+---
+
+Step 7 – Next Iteration (Post-Event)
+
+After your first 50+ users:
+
+Add custom subdomain via Cloudflare or Vercel (alignapp.io).
+
+Add Stripe for organizers ($99 / event tier).
+
+Later, move the Replit code to Vite/React if you want a native-like interface.
+
+
+
+---
+
+⚙ Summary of Your Immediate Action Plan
+
+Order	Task	Outcome
+
+1	Create Replit project, paste landing page code	Live website ready
+2	Set up /app folder & Firebase config	Backend connection
+3	Build basic profile + room form	Functional prototype
+4	Add QR generator	In-person connection
+5	Test at event	Collect feedback
+6	Polish UI + analytics + Stripe	Monetize
+7	Deploy to alignapp.io	Public launch
+
+
+
+---
+
+If you’d like, I can now generate for you the Firebase-connected app files (app/index.html, script.js, style.css) — ready to drop into your Replit project — so you’ll have the full working prototype.
+
+Would you like me to create those next?

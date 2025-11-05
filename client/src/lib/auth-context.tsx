@@ -26,10 +26,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginMutation = useMutation({
     mutationFn: async ({ email, password }: { email: string; password: string }) => {
-      return apiRequest<AuthUser>("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await apiRequest("POST", "/api/auth/login", { email, password });
+      return res.json();
     },
     onSuccess: (data) => {
       queryClient.setQueryData(["/api/auth/me"], data);
@@ -38,10 +36,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signupMutation = useMutation({
     mutationFn: async ({ email, password, displayName }: { email: string; password: string; displayName: string }) => {
-      return apiRequest<AuthUser>("/api/auth/signup", {
-        method: "POST",
-        body: JSON.stringify({ email, password, displayName }),
-      });
+      const res = await apiRequest("POST", "/api/auth/signup", { email, password, displayName });
+      return res.json();
     },
     onSuccess: (data) => {
       queryClient.setQueryData(["/api/auth/me"], data);
@@ -50,9 +46,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      return apiRequest("/api/auth/logout", {
-        method: "POST",
-      });
+      const res = await apiRequest("POST", "/api/auth/logout");
+      return res.json();
     },
     onSuccess: () => {
       queryClient.setQueryData(["/api/auth/me"], null);

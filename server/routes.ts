@@ -1,5 +1,6 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
+import bcrypt from "bcrypt";
 import { storage } from "./storage";
 import { 
   insertUserSchema, 
@@ -47,6 +48,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { password: _, ...userWithoutPassword } = user;
       res.status(201).json(userWithoutPassword);
     } catch (error) {
+      console.error("Signup error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
@@ -60,7 +62,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const user = await storage.getUserByEmail(email);
-      if (!user || user.password !== password) {
+      if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+      
+      // Verify password with bcrypt
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
         return res.status(401).json({ message: "Invalid email or password" });
       }
       
@@ -70,6 +78,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { password: _, ...userWithoutPassword } = user;
       res.json(userWithoutPassword);
     } catch (error) {
+      console.error("Login error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });

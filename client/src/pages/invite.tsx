@@ -28,9 +28,8 @@ export default function InvitePage() {
 
   const joinMutation = useMutation({
     mutationFn: async (circleId: string) => {
-      return apiRequest(`/api/circles/${circleId}/join`, {
-        method: "POST",
-      });
+      const res = await apiRequest("POST", `/api/circles/${circleId}/join`);
+      return res.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/rooms"] });

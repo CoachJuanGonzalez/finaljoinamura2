@@ -33,16 +33,14 @@ export function CreateCircleModal() {
 
   const createMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      return apiRequest("/api/circles", {
-        method: "POST",
-        body: JSON.stringify({
-          name: data.name,
-          description: data.description || undefined,
-          location: data.location || undefined,
-          eventDate: data.eventDate || undefined,
-          capacity: data.capacity ? parseInt(data.capacity) : undefined,
-        }),
+      const res = await apiRequest("POST", "/api/circles", {
+        name: data.name,
+        description: data.description || undefined,
+        location: data.location || undefined,
+        eventDate: data.eventDate || undefined,
+        capacity: data.capacity ? parseInt(data.capacity) : undefined,
       });
+      return res.json();
     },
     onSuccess: (data: any) => {
       queryClient.invalidateQueries({ queryKey: ["/api/rooms"] });

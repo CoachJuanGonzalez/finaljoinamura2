@@ -56,34 +56,34 @@ export default function Rooms() {
         <div className="space-y-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="space-y-2">
-              <h1 className="text-4xl font-bold">Event Rooms</h1>
+              <h1 className="text-4xl font-bold">Amura Circles</h1>
               <p className="text-lg text-muted-foreground">
-                Join an event room to connect with other participants
+                Enter a circle to flow with other participants
               </p>
             </div>
-            <Button size="lg" data-testid="button-create-room">
+            <Button size="lg" className="rounded-full" data-testid="button-create-circle">
               <Plus className="w-4 h-4 mr-2" />
-              Create Room
+              Open Circle
             </Button>
           </div>
 
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input
-              placeholder="Search events..."
+              placeholder="Search circles..."
               className="pl-10"
-              data-testid="input-search-rooms"
+              data-testid="input-search-circles"
             />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {rooms && rooms.map((room) => (
-              <Card key={room.id} className="hover-elevate" data-testid={`card-room-${room.id}`}>
+              <Card key={room.id} className="hover-elevate" data-testid={`card-circle-${room.id}`}>
                 <CardHeader>
                   <div className="flex items-start justify-between gap-2">
                     <CardTitle className="text-xl">{room.name}</CardTitle>
                     {room.isActive && (
-                      <Badge variant="default" className="shrink-0">Active</Badge>
+                      <Badge variant="default" className="shrink-0">In Flow</Badge>
                     )}
                   </div>
                   <CardDescription className="line-clamp-2">
@@ -106,13 +106,13 @@ export default function Rooms() {
                     )}
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <Users className="w-4 h-4" />
-                      <span>{room.participantCount || 0} participants</span>
+                      <span>{room.participantCount || 0} in flow</span>
                     </div>
                   </div>
 
                   <Link href={`/app/rooms/${room.id}`}>
-                    <Button className="w-full" data-testid={`button-join-room-${room.id}`}>
-                      Join Room
+                    <Button className="w-full rounded-full" data-testid={`button-enter-circle-${room.id}`}>
+                      Enter Flow
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
@@ -128,14 +128,14 @@ export default function Rooms() {
                   <Users className="w-8 h-8 text-muted-foreground" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-xl font-semibold">No rooms found</h3>
+                  <h3 className="text-xl font-semibold">No circles found</h3>
                   <p className="text-muted-foreground">
-                    Create a new room to start connecting with others
+                    Open a new circle to begin the flow
                   </p>
                 </div>
-                <Button size="lg">
+                <Button size="lg" className="rounded-full">
                   <Plus className="w-4 h-4 mr-2" />
-                  Create Your First Room
+                  Open Your First Circle
                 </Button>
               </div>
             </Card>

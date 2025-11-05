@@ -1,72 +1,98 @@
-# ALIGN - Event Networking Platform
+# AMURA - Flow-Driven Connection Platform
 
 ## Overview
-ALIGN is a Progressive Web App designed to transform event networking. Users can create profiles with "Offer" and "Ask" frameworks, join event rooms, connect via QR codes, track daily networking actions, and compete on leaderboards.
+AMURA is a Progressive Web App that transforms connection into continuity. Users create profiles with "Offer" and "Ask" frameworks, enter circles (event spaces), connect via QR codes, track daily promises, and compete on the flowboard. Inspired by "Amaru," the Inca serpent representing wisdom and connection between worlds.
+
+**Tagline:** Keep the flow alive.
+
+**Mission:** Transform networking into flow — where promises become progress and connections become continuity.
 
 ## Recent Changes (Nov 2025)
-- **Complete Frontend Build**: Landing page, auth UI, profile management, room system, QR code generation, activity feeds, and leaderboards
-- **Backend API**: Full REST API with in-memory storage for all features
-- **Data Integration**: Connected frontend to backend with React Query
-- **Design System**: Implemented Inter font, custom color tokens, responsive layouts
+- **Brand Transformation**: Complete rebrand from ALIGN to AMURA with cosmic black theme, indigo→teal gradient, and flow-driven language
+- **PostgreSQL Migration**: Migrated from in-memory storage to PostgreSQL database with Drizzle ORM
+- **Database Optimizations**: Fixed leaderboard ordering, participant counting with GROUP BY, null-safe updates
+- **Complete Frontend**: Landing page, auth UI, profile management (Your Field), circle system, QR code generation, promise feed, and flowboard
+- **Design System**: AMURA brand colors (cosmic black #0B0E12, indigo #3F00FF, teal #00E8C2, gold #E2B857), Inter font, premium aesthetic
 
 ## Project Architecture
 
 ### Frontend (React + TypeScript + Tailwind)
 - **Pages**:
-  - `/` - Landing page with hero, features, how it works sections
+  - `/` - Landing page with "Keep the flow alive" hero, AMURA branding, flow-driven features
   - `/auth` - Authentication (ready for Firebase integration)
-  - `/app/rooms` - Event room directory
-  - `/app/rooms/:id` - Room details with participants, activity feed, leaderboard
-  - `/app/profile` - Profile creation and editing
+  - `/app/rooms` - Amura Circles directory (event spaces)
+  - `/app/rooms/:id` - Circle details with participants, promise feed, flowboard
+  - `/app/profile` - Your Field (profile creation and editing)
   - `/app/qr` - QR code generation and sharing
 
 - **Components**:
-  - `AppLayout` - Navigation header with user menu
+  - `AppLayout` - Navigation header with AMURA branding and user menu
   - `UserProfileCard` - Reusable profile display card
-  - Shadcn UI components for consistent design
+  - Shadcn UI components with AMURA color scheme
 
 - **Design Principles**:
-  - Clean, modern aesthetic inspired by Linear/Notion
+  - Premium, flow-driven aesthetic inspired by Notion/Tesla/Calm
+  - Cosmic black background with indigo→teal gradient accents
+  - Gold highlights for achievements and streaks
   - Inter font for professional typography
   - Responsive mobile-first design
-  - Hover/active state elevations for interactions
+  - Rounded-full pill buttons for CTAs
+  - Hover/active state elevations with teal/gold glow
   - Beautiful loading states with skeletons
 
-### Backend (Express + TypeScript)
-- **Storage**: In-memory storage (MemStorage) with demo seed data
+### Backend (Express + TypeScript + PostgreSQL)
+- **Storage**: PostgreSQL database with Drizzle ORM (DbStorage)
 - **API Endpoints**:
   - `/api/users` - User management
   - `/api/profiles` - Profile CRUD and listing
-  - `/api/rooms` - Event room management
-  - `/api/actions` - Activity logging
+  - `/api/rooms` - Circle (event room) management
+  - `/api/actions` - Promise logging (activity tracking)
   - `/api/connections` - User connections
-  - `/api/streaks` - Streak tracking
-  - `/api/leaderboard` - Rankings by streak and activity
+  - `/api/streaks` - Flow streak tracking
+  - `/api/leaderboard` - Flowboard rankings by streak and promises kept
 
 - **Features**:
-  - Automatic streak tracking on daily actions
-  - Participant counting per room
-  - Leaderboard ranking logic
+  - Automatic flow streak tracking on daily promises
+  - Participant counting per circle (optimized with GROUP BY)
+  - Flowboard ranking logic (streak → actionsThisWeek → displayName)
   - Connection validation (no duplicates)
+  - Null-safe update methods for all entities
 
 ### Data Models
 - **User**: email, displayName, photoURL
-- **Profile**: user info, offer, ask, links, room assignment, bio, role, company
-- **Room**: name, description, location, eventDate, organizer, participant count
-- **Action**: user actions with type and content, room association
-- **Connection**: user-to-user connections, room context
-- **Streak**: current/longest streak tracking, last action date
+- **Profile**: user info, offer, ask, links, circle assignment, bio, role, company
+- **Room** (Circle): name, description, location, eventDate, organizer, participant count
+- **Action** (Promise): user promises with type and content, circle association
+- **Connection**: user-to-user connections, circle context
+- **Streak**: current/longest flow streak tracking, last action date
+
+## Brand Philosophy
+- **Connection → Continuity**: Relationships don't end after events, they evolve
+- **Promises → Progress**: Daily actions create momentum
+- **Flow State**: Networking becomes effortless when intentions align
+- **Ancient Wisdom**: Inspired by Amaru serpent symbolism (transformation, connection)
+- **Premium Feel**: High-end design that respects users' time and attention
+
+## Terminology
+- **Circles** (not "rooms"): Event spaces where flow happens
+- **Promises** (not "actions"): Daily commitments that build continuity
+- **Flow Streaks** (not "streaks"): Consistency metrics
+- **Flowboard** (not "leaderboard"): Community rankings
+- **Your Field** (not "profile"): Personal space defining offer/ask
+- **Enter Flow** (not "join"): Active participation verb
+- **Open Circle** (not "create room"): Circle creation action
 
 ## User Preferences
-- Clean, professional design
+- Premium, conscious design
 - Mobile-optimized for in-person events
-- Fast QR code generation for quick networking
-- Simple Offer/Ask framework for intentional connections
+- Fast QR code generation for instant connection
+- Simple Offer/Ask framework for intentional flow
+- Flow-driven language that feels human and warm
 
 ## Future Enhancements
 - Firebase Authentication integration (credentials ready to be added)
-- Stripe payment processing for event organizers ($99/event tier)
-- Real-time notifications
+- Stripe payment processing for circle organizers ($99/event tier)
+- Real-time notifications with WebSocket
 - Direct messaging between connections
 - Analytics dashboard for organizers
 - PWA installation prompts
@@ -74,31 +100,41 @@ ALIGN is a Progressive Web App designed to transform event networking. Users can
 
 ## Tech Stack
 - **Frontend**: React, TypeScript, Wouter (routing), TanStack Query, Tailwind CSS, Shadcn UI
-- **Backend**: Express.js, TypeScript
-- **Future**: Firebase Auth & Firestore (infrastructure ready)
+- **Backend**: Express.js, TypeScript, PostgreSQL, Drizzle ORM
+- **Database**: Neon PostgreSQL with WebSocket support
+- **Future**: Firebase Auth (infrastructure ready)
 - **QR Codes**: qrcode library for generation
 - **Icons**: Lucide React
 
 ## Running the Project
 The workflow "Start application" runs `npm run dev` which starts both the Express server and Vite dev server on the same port. The app auto-restarts on file changes.
 
+## Database Management
+- Schema defined in `shared/schema.ts` using Drizzle ORM
+- Push changes: `npm run db:push` (or `npm run db:push --force` if data loss warning)
+- Seed data: `npm run db:seed`
+- Never manually write SQL migrations - use Drizzle push
+
 ## Firebase Integration (When Ready)
 To enable authentication:
 1. Add secrets: `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_API_KEY`
 2. Firebase config code is ready in auth.tsx
-3. Backend can be migrated to Firestore if needed
+3. Backend uses PostgreSQL (Firestore not needed)
 
 ## Project Status
-✅ Complete landing page with generated images
-✅ Full authentication UI (ready for Firebase)
-✅ Profile creation with Offer/Ask framework (persists to backend)
-✅ Room directory and detail views
+✅ Complete AMURA brand transformation (colors, copy, philosophy)
+✅ Landing page with "Keep the flow alive" hero
+✅ PostgreSQL database with production-ready queries
+✅ Profile creation (Your Field) with Offer/Ask framework
+✅ Circle directory and detail views
 ✅ QR code generation and download
-✅ Activity feed display
-✅ Leaderboard with rankings
-✅ Complete REST API with seed data
+✅ Promise feed display
+✅ Flowboard with rankings
+✅ Complete REST API with PostgreSQL storage
 ✅ React Query integration with loading states
 ✅ End-to-end testing completed successfully
-✅ All bugs fixed and verified
-⏳ Pending: Firebase auth integration (when you're ready)
+✅ Database queries optimized and architect-approved
+⏳ Pending: Firebase auth integration (when ready)
+⏳ Pending: Room detail page terminology updates
+⏳ Pending: Profile setup page terminology updates
 ⏳ Pending: Production deployment

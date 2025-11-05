@@ -21,13 +21,13 @@ export function AppLayout({ children }: AppLayoutProps) {
   // Mock user data - will be replaced with real auth
   const currentUser = {
     displayName: "Demo User",
-    email: "demo@align.app",
+    email: "demo@amura.app",
     photoURL: null,
   };
 
   const navItems = [
-    { href: "/app/rooms", label: "Rooms", icon: Users },
-    { href: "/app/profile", label: "Profile", icon: User },
+    { href: "/app/rooms", label: "Circles", icon: Users },
+    { href: "/app/profile", label: "Your Field", icon: User },
     { href: "/app/qr", label: "My QR", icon: QrCode },
   ];
 
@@ -37,8 +37,8 @@ export function AppLayout({ children }: AppLayoutProps) {
         <div className="max-w-7xl mx-auto px-6 flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/">
-              <h1 className="text-2xl font-bold inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
-                ALIGN
+              <h1 className="text-2xl font-bold inline-flex items-center gap-2 hover:opacity-80 transition-opacity tracking-wide">
+                AMURA
                 <Sparkles className="w-5 h-5 text-primary" />
               </h1>
             </Link>
@@ -85,7 +85,7 @@ export function AppLayout({ children }: AppLayoutProps) {
               <Link href="/app/profile">
                 <DropdownMenuItem data-testid="menu-profile">
                   <User className="w-4 h-4 mr-2" />
-                  Profile
+                  Your Field
                 </DropdownMenuItem>
               </Link>
               <Link href="/app/qr">

@@ -20,12 +20,12 @@ export default function RoomDetail() {
   });
 
   const { data: participants, isLoading: participantsLoading } = useQuery<ProfileWithUser[]>({
-    queryKey: ["/api/profiles", roomId],
+    queryKey: [`/api/profiles?roomId=${roomId}`],
     enabled: !!roomId,
   });
 
   const { data: activities, isLoading: activitiesLoading } = useQuery<ActionWithUser[]>({
-    queryKey: ["/api/actions", roomId],
+    queryKey: [`/api/actions?roomId=${roomId}`],
     enabled: !!roomId,
   });
 

@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { 
@@ -8,12 +8,12 @@ import {
   insertActionSchema,
   insertConnectionSchema 
 } from "@shared/schema";
-import { z } from "zod";
 
-// Extend Express Request type for session
-declare module 'express-session' {
-  interface SessionData {
+// Extend Express Request to include session
+interface AuthRequest extends Request {
+  session: {
     userId?: string;
+    destroy: (callback: (err?: Error) => void) => void;
   }
 }
 
@@ -27,7 +27,7 @@ function generateSlug(name: string): string {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
-  app.post("/api/auth/signup", async (req, res) => {
+  app.post("/api/auth/signup", async (req: AuthRequest, res) => {
     try {
       const { email, password, displayName } = req.body;
       
@@ -51,7 +51,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/auth/login", async (req, res) => {
+  app.post("/api/auth/login", async (req: AuthRequest, res) => {
     try {
       const { email, password } = req.body;
       
@@ -74,7 +74,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/auth/me", async (req, res) => {
+  app.get("/api/auth/me", async (req: AuthRequest, res) => {
     try {
       if (!req.session.userId) {
         return res.status(401).json({ message: "Not authenticated" });
@@ -93,7 +93,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/auth/logout", async (req, res) => {
+  app.post("/api/auth/logout", async (req: AuthRequest, res) => {
     req.session.destroy((err) => {
       if (err) {
         return res.status(500).json({ message: "Failed to logout" });
@@ -283,7 +283,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/circles", async (req, res) => {
+  app.post("/api/circles", async (req: AuthRequest, res) => {
     try {
       if (!req.session.userId) {
         return res.status(401).json({ message: "Not authenticated" });
@@ -329,7 +329,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/circles/:id/join", async (req, res) => {
+  app.post("/api/circles/:id/join", async (req: AuthRequest, res) => {
     try {
       if (!req.session.userId) {
         return res.status(401).json({ message: "Not authenticated" });

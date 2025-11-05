@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -9,20 +10,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Users, QrCode, TrendingUp, User, LogOut, Settings, Sparkles } from "lucide-react";
+import { Users, QrCode, User, LogOut, Settings, Sparkles } from "lucide-react";
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
 export function AppLayout({ children }: AppLayoutProps) {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
+  const { user, logout } = useAuth();
 
-  // Mock user data - will be replaced with real auth
-  const currentUser = {
-    displayName: "Demo User",
-    email: "demo@amura.app",
+  const currentUser = user || {
+    displayName: "Guest",
+    email: "guest@amura.app",
     photoURL: null,
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    setLocation("/");
   };
 
   const navItems = [
@@ -99,7 +105,11 @@ export function AppLayout({ children }: AppLayoutProps) {
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive" data-testid="menu-logout">
+              <DropdownMenuItem 
+                className="text-destructive" 
+                data-testid="menu-logout"
+                onClick={handleLogout}
+              >
                 <LogOut className="w-4 h-4 mr-2" />
                 Log Out
               </DropdownMenuItem>

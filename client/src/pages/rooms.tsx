@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Users, MapPin, Calendar, Plus, Search, ArrowRight } from "lucide-react";
+import { CreateCircleModal } from "@/components/create-circle-modal";
+import { Users, MapPin, Calendar, Search, ArrowRight } from "lucide-react";
 import type { RoomWithOrganizer } from "@shared/schema";
 
 export default function Rooms() {
@@ -61,10 +62,7 @@ export default function Rooms() {
                 Enter a circle to flow with other participants
               </p>
             </div>
-            <Button size="lg" className="rounded-full" data-testid="button-create-circle">
-              <Plus className="w-4 h-4 mr-2" />
-              Open Circle
-            </Button>
+            <CreateCircleModal />
           </div>
 
           <div className="relative">

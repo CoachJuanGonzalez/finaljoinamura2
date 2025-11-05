@@ -72,6 +72,7 @@ export class MemStorage implements IStorage {
   private actions: Map<string, Action>;
   private connections: Map<string, Connection>;
   private streaks: Map<string, Streak>;
+  private memberships: Map<string, Membership>;
 
   constructor() {
     this.users = new Map();
@@ -80,6 +81,7 @@ export class MemStorage implements IStorage {
     this.actions = new Map();
     this.connections = new Map();
     this.streaks = new Map();
+    this.memberships = new Map();
     
     // Seed with demo data
     this.seedDemoData();
@@ -540,5 +542,43 @@ export class MemStorage implements IStorage {
     });
     
     return entries.slice(0, limit);
+  }
+
+  // Memberships
+  async getRoomBySlug(slug: string): Promise<Room | undefined> {
+    return Array.from(this.rooms.values()).find(room => room.slug === slug);
+  }
+
+  async createMembership(insertMembership: InsertMembership): Promise<Membership> {
+    const id = randomUUID();
+    const membership: Membership = {
+      id,
+      ...insertMembership,
+      joinedAt: new Date(),
+    };
+    this.memberships.set(id, membership);
+    return membership;
+  }
+
+  async getMembershipsByUserId(userId: string): Promise<Membership[]> {
+    return Array.from(this.memberships.values()).filter(
+      membership => membership.userId === userId
+    );
+  }
+
+  async getMembershipsByRoomId(roomId: string): Promise<Membership[]> {
+    return Array.from(this.memberships.values()).filter(
+      membership => membership.roomId === roomId
+    );
+  }
+
+  async getUserMembershipForRoom(userId: string, roomId: string): Promise<Membership | undefined> {
+    return Array.from(this.memberships.values()).find(
+      membership => membership.userId === userId && membership.roomId === roomId
+    );
+  }
+
+  async deleteMembership(id: string): Promise<void> {
+    this.memberships.delete(id);
   }
 }

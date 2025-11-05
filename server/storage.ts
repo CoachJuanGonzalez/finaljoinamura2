@@ -7,6 +7,7 @@ import {
   type Streak, type InsertStreak, type LeaderboardEntry
 } from "@shared/schema";
 import { randomUUID } from "crypto";
+import { DbStorage } from "./db-storage";
 
 export interface IStorage {
   // Users
@@ -51,6 +52,9 @@ export interface IStorage {
   updateStreak(userId: string, streak: Partial<Streak>): Promise<Streak>;
   getLeaderboard(limit: number): Promise<LeaderboardEntry[]>;
 }
+
+// Use database storage in production
+export const storage: IStorage = new DbStorage();
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
@@ -529,5 +533,3 @@ export class MemStorage implements IStorage {
     return entries.slice(0, limit);
   }
 }
-
-export const storage = new MemStorage();

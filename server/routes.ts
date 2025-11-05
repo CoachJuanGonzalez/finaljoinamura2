@@ -8,8 +8,100 @@ import {
   insertActionSchema,
   insertConnectionSchema 
 } from "@shared/schema";
+import { z } from "zod";
+
+// Extend Express Request type for session
+declare module 'express-session' {
+  interface SessionData {
+    userId?: string;
+  }
+}
+
+// Helper to generate slug from name
+function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Auth routes
+  app.post("/api/auth/signup", async (req, res) => {
+    try {
+      const { email, password, displayName } = req.body;
+      
+      if (!email || !password || !displayName) {
+        return res.status(400).json({ message: "Email, password, and display name are required" });
+      }
+      
+      const existingUser = await storage.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ message: "User with this email already exists" });
+      }
+      
+      const user = await storage.createUser({ email, password, displayName, photoURL: null });
+      req.session.userId = user.id;
+      
+      // Remove password from response
+      const { password: _, ...userWithoutPassword } = user;
+      res.status(201).json(userWithoutPassword);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+      }
+      
+      const user = await storage.getUserByEmail(email);
+      if (!user || user.password !== password) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+      
+      req.session.userId = user.id;
+      
+      // Remove password from response
+      const { password: _, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/auth/me", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
+      const user = await storage.getUser(req.session.userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Remove password from response
+      const { password: _, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/auth/logout", async (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Failed to logout" });
+      }
+      res.json({ message: "Logged out successfully" });
+    });
+  });
+
   // User routes
   app.get("/api/users/:id", async (req, res) => {
     try {
@@ -170,6 +262,104 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Room not found" });
       }
       res.json(room);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Circle invitation routes
+  app.get("/api/circles/slug/:slug", async (req, res) => {
+    try {
+      const room = await storage.getRoomBySlug(req.params.slug);
+      if (!room) {
+        return res.status(404).json({ message: "Circle not found" });
+      }
+      
+      // Get room with organizer info
+      const roomWithOrganizer = await storage.getRoomWithOrganizer(room.id);
+      res.json(roomWithOrganizer);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/circles", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
+      const { name, description, location, eventDate, capacity } = req.body;
+      
+      if (!name) {
+        return res.status(400).json({ message: "Circle name is required" });
+      }
+      
+      // Generate unique slug
+      let slug = generateSlug(name);
+      let existingRoom = await storage.getRoomBySlug(slug);
+      let counter = 1;
+      
+      while (existingRoom) {
+        slug = `${generateSlug(name)}-${counter}`;
+        existingRoom = await storage.getRoomBySlug(slug);
+        counter++;
+      }
+      
+      const room = await storage.createRoom({
+        name,
+        slug,
+        description: description || null,
+        location: location || null,
+        eventDate: eventDate ? new Date(eventDate) : null,
+        capacity: capacity || null,
+        organizerId: req.session.userId,
+        isActive: 1,
+      });
+      
+      // Automatically join the creator to the circle
+      await storage.createMembership({
+        userId: req.session.userId,
+        roomId: room.id,
+      });
+      
+      res.status(201).json(room);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/circles/:id/join", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
+      const room = await storage.getRoom(req.params.id);
+      if (!room) {
+        return res.status(404).json({ message: "Circle not found" });
+      }
+      
+      // Check if already a member
+      const existing = await storage.getUserMembershipForRoom(req.session.userId, req.params.id);
+      if (existing) {
+        return res.status(400).json({ message: "Already a member of this circle" });
+      }
+      
+      // Check capacity if set
+      if (room.capacity) {
+        const memberships = await storage.getMembershipsByRoomId(req.params.id);
+        if (memberships.length >= room.capacity) {
+          return res.status(400).json({ message: "Circle is at full capacity" });
+        }
+      }
+      
+      const membership = await storage.createMembership({
+        userId: req.session.userId,
+        roomId: req.params.id,
+      });
+      
+      res.status(201).json(membership);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
     }

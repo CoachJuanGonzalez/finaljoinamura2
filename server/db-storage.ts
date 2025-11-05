@@ -7,6 +7,7 @@ import {
   actions,
   connections,
   streaks,
+  memberships,
   type User,
   type InsertUser,
   type Profile,
@@ -22,6 +23,8 @@ import {
   type InsertConnection,
   type Streak,
   type InsertStreak,
+  type Membership,
+  type InsertMembership,
   type LeaderboardEntry,
 } from "@shared/schema";
 import type { IStorage } from "./storage";
@@ -150,11 +153,11 @@ export class DbStorage implements IStorage {
       .select({
         room: rooms,
         organizer: users,
-        participantCount: sql<number>`COALESCE(COUNT(${profiles.id}), 0)`,
+        participantCount: sql<number>`COALESCE(COUNT(DISTINCT ${memberships.id}), 0)`,
       })
       .from(rooms)
       .leftJoin(users, eq(rooms.organizerId, users.id))
-      .leftJoin(profiles, eq(profiles.roomId, rooms.id))
+      .leftJoin(memberships, eq(memberships.roomId, rooms.id))
       .where(eq(rooms.id, id))
       .groupBy(rooms.id, users.id);
 
@@ -195,11 +198,11 @@ export class DbStorage implements IStorage {
       .select({
         room: rooms,
         organizer: users,
-        participantCount: sql<number>`COALESCE(COUNT(${profiles.id}), 0)`,
+        participantCount: sql<number>`COALESCE(COUNT(DISTINCT ${memberships.id}), 0)`,
       })
       .from(rooms)
       .leftJoin(users, eq(rooms.organizerId, users.id))
-      .leftJoin(profiles, eq(profiles.roomId, rooms.id))
+      .leftJoin(memberships, eq(memberships.roomId, rooms.id))
       .groupBy(rooms.id, users.id);
 
     return results
@@ -403,5 +406,36 @@ export class DbStorage implements IStorage {
       actionsThisWeek: Number(r.actionsThisWeek),
       rank: index + 1,
     }));
+  }
+
+  // Memberships
+  async getRoomBySlug(slug: string): Promise<Room | undefined> {
+    const [room] = await db.select().from(rooms).where(eq(rooms.slug, slug));
+    return room;
+  }
+
+  async createMembership(insertMembership: InsertMembership): Promise<Membership> {
+    const [membership] = await db.insert(memberships).values(insertMembership).returning();
+    return membership;
+  }
+
+  async getMembershipsByUserId(userId: string): Promise<Membership[]> {
+    return await db.select().from(memberships).where(eq(memberships.userId, userId));
+  }
+
+  async getMembershipsByRoomId(roomId: string): Promise<Membership[]> {
+    return await db.select().from(memberships).where(eq(memberships.roomId, roomId));
+  }
+
+  async getUserMembershipForRoom(userId: string, roomId: string): Promise<Membership | undefined> {
+    const [membership] = await db
+      .select()
+      .from(memberships)
+      .where(and(eq(memberships.userId, userId), eq(memberships.roomId, roomId)));
+    return membership;
+  }
+
+  async deleteMembership(id: string): Promise<void> {
+    await db.delete(memberships).where(eq(memberships.id, id));
   }
 }

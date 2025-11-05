@@ -6,6 +6,7 @@ import { sql } from "drizzle-orm";
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   email: text("email").notNull().unique(),
+  password: text("password").notNull(),
   displayName: text("display_name").notNull(),
   photoURL: text("photo_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -28,11 +29,13 @@ export const profiles = pgTable("profiles", {
 export const rooms = pgTable("rooms", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
   description: text("description"),
   eventDate: timestamp("event_date"),
   location: text("location"),
   organizerId: varchar("organizer_id").notNull().references(() => users.id),
   isActive: integer("is_active").notNull().default(1),
+  capacity: integer("capacity"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -59,6 +62,13 @@ export const streaks = pgTable("streaks", {
   currentStreak: integer("current_streak").notNull().default(0),
   longestStreak: integer("longest_streak").notNull().default(0),
   lastActionDate: timestamp("last_action_date"),
+});
+
+export const memberships = pgTable("memberships", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  roomId: varchar("room_id").notNull().references(() => rooms.id, { onDelete: "cascade" }),
+  joinedAt: timestamp("joined_at").defaultNow().notNull(),
 });
 
 // Insert schemas
@@ -92,6 +102,11 @@ export const insertStreakSchema = createInsertSchema(streaks).omit({
   id: true,
 });
 
+export const insertMembershipSchema = createInsertSchema(memberships).omit({
+  id: true,
+  joinedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -110,6 +125,9 @@ export type InsertConnection = z.infer<typeof insertConnectionSchema>;
 
 export type Streak = typeof streaks.$inferSelect;
 export type InsertStreak = z.infer<typeof insertStreakSchema>;
+
+export type Membership = typeof memberships.$inferSelect;
+export type InsertMembership = z.infer<typeof insertMembershipSchema>;
 
 // Extended types for UI
 export type ProfileWithUser = Profile & {

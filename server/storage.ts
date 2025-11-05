@@ -4,7 +4,8 @@ import {
   type Room, type InsertRoom, type RoomWithOrganizer,
   type Action, type InsertAction, type ActionWithUser,
   type Connection, type InsertConnection,
-  type Streak, type InsertStreak, type LeaderboardEntry
+  type Streak, type InsertStreak, type LeaderboardEntry,
+  type Membership, type InsertMembership
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { DbStorage } from "./db-storage";
@@ -51,6 +52,14 @@ export interface IStorage {
   getStreakByUser(userId: string): Promise<Streak | undefined>;
   updateStreak(userId: string, streak: Partial<Streak>): Promise<Streak>;
   getLeaderboard(limit: number): Promise<LeaderboardEntry[]>;
+  
+  // Memberships
+  getRoomBySlug(slug: string): Promise<Room | undefined>;
+  createMembership(membership: InsertMembership): Promise<Membership>;
+  getMembershipsByUserId(userId: string): Promise<Membership[]>;
+  getMembershipsByRoomId(roomId: string): Promise<Membership[]>;
+  getUserMembershipForRoom(userId: string, roomId: string): Promise<Membership | undefined>;
+  deleteMembership(id: string): Promise<void>;
 }
 
 // Use database storage in production

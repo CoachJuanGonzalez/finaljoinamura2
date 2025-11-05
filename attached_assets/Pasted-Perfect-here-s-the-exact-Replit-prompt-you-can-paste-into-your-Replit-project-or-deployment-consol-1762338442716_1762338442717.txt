@@ -1,0 +1,160 @@
+Perfect — here’s the exact Replit prompt you can paste into your Replit project or deployment console to transform your current “ALIGN” site into the new AMURA brand, including color, typography, wording, and philosophy updates.
+
+It’s structured so that Replit’s AI or any developer reading it knows what to replace, why, and how — while preserving your design and improving it visually and emotionally.
+
+
+---
+
+🧠 Replit Prompt — AMURA Brand Transformation
+
+> 🔧 Goal: Transform all ALIGN branding into AMURA, with a refined high-end, flow-driven identity. Preserve clean layout, responsiveness, and functionality.
+
+
+
+
+---
+
+🧾 Instructions for Replit
+
+Step 1:
+Open your existing ALIGN project (HTML/CSS/JS or React) and paste this entire prompt into the AI assistant or comment box.
+
+Step 2:
+Run / regenerate site preview after the edits.
+
+
+---
+
+🧩 Prompt Text
+
+You are updating an existing project currently branded as “ALIGN” to the new name and identity “AMURA.”
+
+---
+
+## CORE REBRAND DATA
+
+*New Name:* AMURA  
+*Tagline:* Keep the flow alive.  
+*Essence:* Connection, continuity, integrity, evolution.  
+*Mission:* Transform networking into flow — where promises become progress and connections become continuity.  
+*Symbolism:* Inspired by “Amaru,” the Inca serpent representing wisdom and connection between worlds.  
+*Tone:* Premium, conscious, minimalist, warm, futuristic.  
+
+---
+
+## DESIGN & VISUAL SYSTEM
+
+### COLORS
+- *Primary Background:* #0B0E12 (deep cosmic black)
+- *Primary Gradient:* Indigo (#3F00FF) → Teal (#00E8C2)
+- *Accent Gold:* #E2B857 (for subtle highlights)
+- *Text Light:* #EAEAEA
+- *Muted Text:* #8A8F98
+- *Button Glow (hover):* Gradient glow of teal + gold.
+
+Replace any ALIGN blues or purples with this indigo/teal gradient.  
+Add small gold gradients for vitality (not overdone).
+
+---
+
+### TYPOGRAPHY
+- *Primary Font:* Inter or Satoshi (sans-serif)
+- *Heading Weight:* 700–800 (bold, clean)
+- *Body Weight:* 400–500
+- *Letter Spacing:* Slightly expanded (0.5–1px)
+- *Capitalization:* All caps for brand wordmarks (AMURA)
+
+---
+
+### LOGO INTEGRATION
+- Replace ALIGN logo SVGs with the new AMURA mark (A-shaped flowing serpent loop or upload /assets/amura-logo.svg).
+- Logo color variant: gradient indigo→teal on dark background.
+
+---
+
+### COPY UPDATES (REPLACE EVERYWHERE)
+
+*Old:* ALIGN  
+*New:* AMURA  
+
+*Old tagline:* “Where connection becomes evolution.”  
+*New tagline:* “Keep the flow alive.”  
+
+*Old concept:* networking / alignment / rooms.  
+*New concept:* flow / integrity / circles / continuity.
+
+Update all page sections accordingly:
+
+#### HERO SECTION
+> Title: “Keep the flow alive.”  
+> Subtitle: “AMURA turns connection into continuity — where promises become progress, and every encounter fuels your evolution.”  
+> Buttons:  
+> - “Join AMURA”  
+> - “For Organizers” → “Host with AMURA”
+
+#### FEATURE HEADINGS
+1. “Instant Connection” → “Flow Instantly”  
+2. “Event Rooms” → “Amura Circles”  
+3. “Momentum Tracker” → “Promise Tracker”  
+4. “Leaderboards” → “Flow Streaks”  
+5. “Analytics” → “Connection Insights”
+
+#### ABOUT SECTION
+Replace paragraphs referencing “ALIGN” with:
+
+> “Amura is the bridge between action and intention.  
+> Inspired by ancient wisdom and modern design, it transforms how we connect, follow through, and grow together.  
+> Every promise kept. Every connection alive.”
+
+---
+
+### UX TONE & MICROCOPY
+
+Make all interface and button labels slightly more human and fluid:
+- “Join Room” → “Enter Flow”
+- “Create Event” → “Open Circle”
+- “Add Action” → “Log Promise”
+- “Leaderboard” → “Flowboard”
+- “Profile” → “Your Field”
+
+---
+
+### ANIMATION & FEEL
+- Add smooth gradient shimmer on buttons.
+- Subtle particle or light-flow animation behind hero text.
+- Soft hover glow for cards (gold or teal tone).
+
+---
+
+### META / SEO
+- *Title:* AMURA – Keep the flow alive  
+- *Description:* AMURA is the modern connection platform for creators, leaders, and visionaries. Keep promises visible, relationships alive, and your flow in motion.  
+- *Favicon:* Upload amura-symbol.png (loop A mark).
+
+---
+
+### STRUCTURE ENHANCEMENTS
+- Ensure top navigation reads: Home | Features | Circles | Organizers | Login  
+- Update footer:
+
+© 2025 AMURA. Keep the flow alive.
+
+- Replace any remaining references to “ALIGN” in comments, metadata, or IDs with “AMURA”.
+
+---
+
+### OPTIONAL (for polish)
+- Add soft gradient glow under hero CTA buttons.
+- Add a simple “energy pulse” animation behind the AMURA logo when the page loads.
+- Convert existing CTA buttons into rounded-pill style (border-radius: 9999px).
+- Maintain responsive design for all screen sizes.
+
+---
+
+✅ Deliverable: A modern, premium, flow-based redesign for AMURA that looks like a top-tier SaaS brand (Notion × Tesla × Calm).  
+✅ Keep all structure intact, just rename, recolor, and upgrade copy + animations.
+
+
+---
+
+Would you like me to generate a second prompt that specifically transforms the app dashboard (inside /app/index.html) into AMURA UI with Flow Circles, Promise Tracker, and Flowboard included? That would complete the whole ecosystem update.

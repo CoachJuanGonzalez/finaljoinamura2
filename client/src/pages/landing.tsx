@@ -18,35 +18,35 @@ export default function Landing() {
           <div className="space-y-8">
             <Badge className="inline-flex items-center gap-2 px-4 py-1.5" data-testid="badge-beta">
               <Sparkles className="w-3.5 h-3.5" />
-              <span className="text-xs font-semibold uppercase tracking-wide">Event Networking Reimagined</span>
+              <span className="text-xs font-semibold uppercase tracking-wide">Flow-Driven Connection</span>
             </Badge>
             
             <div className="space-y-6">
               <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight" data-testid="text-hero-headline">
-                Connect Meaningfully at Every Event
+                Keep the flow alive.
               </h1>
               <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-xl">
-                Share what you offer, discover what others ask, and build real connections through instant QR networking.
+                AMURA turns connection into continuity — where promises become progress, and every encounter fuels your evolution.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/app">
-                <Button size="lg" className="text-base px-8 py-6 h-auto" data-testid="button-join-event">
-                  Join Event Room
+                <Button size="lg" className="text-base px-8 py-6 h-auto rounded-full" data-testid="button-join-amura">
+                  Join AMURA
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
               <Link href="/app">
-                <Button size="lg" variant="outline" className="text-base px-8 py-6 h-auto" data-testid="button-learn-more">
-                  Learn More
+                <Button size="lg" variant="outline" className="text-base px-8 py-6 h-auto rounded-full" data-testid="button-host">
+                  Host with AMURA
                 </Button>
               </Link>
             </div>
 
             <div className="flex items-center gap-2 text-sm text-muted-foreground pt-4">
               <CheckCircle2 className="w-5 h-5 text-primary" />
-              <span data-testid="text-social-proof">1,000+ connections made at 50+ events</span>
+              <span data-testid="text-social-proof">Keeping flow alive at 50+ events</span>
             </div>
           </div>
 
@@ -68,9 +68,9 @@ export default function Landing() {
       <section className="py-24 bg-card/30" data-testid="section-how-it-works">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl lg:text-5xl font-bold">How ALIGN Works</h2>
+            <h2 className="text-3xl lg:text-5xl font-bold">How AMURA Works</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Three simple steps to transform how you network at events
+              Three simple steps to enter the flow
             </p>
           </div>
 
@@ -79,22 +79,22 @@ export default function Landing() {
               {
                 step: "01",
                 icon: Users,
-                title: "Create Your Profile",
+                title: "Define Your Field",
                 description: "Share what you offer and what you're looking for. Let others know how they can help you and how you can help them.",
                 testId: "card-step-1"
               },
               {
                 step: "02",
                 icon: QrCode,
-                title: "Connect via QR",
-                description: "Generate your unique QR code. Scan others' codes to instantly exchange profiles and stay connected beyond the event.",
+                title: "Flow Instantly",
+                description: "Generate your unique QR code. Scan others' codes to instantly exchange profiles and enter flow together.",
                 testId: "card-step-2"
               },
               {
                 step: "03",
                 icon: TrendingUp,
-                title: "Build Momentum",
-                description: "Log daily actions, track your networking streak, and climb the leaderboard as you build meaningful relationships.",
+                title: "Keep Promises",
+                description: "Log daily promises, track your flow streak, and climb the flowboard as you build continuity.",
                 testId: "card-step-3"
               }
             ].map((item) => (
@@ -129,14 +129,14 @@ export default function Landing() {
               />
             </div>
             <div className="space-y-6">
-              <Badge variant="outline">Core Feature</Badge>
+              <Badge variant="outline">Core Flow</Badge>
               <h2 className="text-4xl lg:text-5xl font-bold">Offer & Ask Framework</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Make networking intentional. Clearly define what value you bring and what support you're seeking. 
-                This simple framework creates authentic connections based on mutual value exchange.
+                Make connection intentional. Clearly define what value you bring and what support you're seeking. 
+                This simple framework creates authentic flow based on mutual value exchange.
               </p>
               <ul className="space-y-3">
-                {["Share your expertise and skills", "Express your current needs", "Find complementary connections", "Build win-win relationships"].map((item, i) => (
+                {["Share your expertise and gifts", "Express your current needs", "Find complementary flow", "Build continuity together"].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span className="text-foreground">{item}</span>
@@ -149,14 +149,14 @@ export default function Landing() {
           {/* Feature 2: QR Connect */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 lg:order-1">
-              <Badge variant="outline">Instant Connection</Badge>
-              <h2 className="text-4xl lg:text-5xl font-bold">QR Code Networking</h2>
+              <Badge variant="outline">Flow Instantly</Badge>
+              <h2 className="text-4xl lg:text-5xl font-bold">Instant Connection</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Forget fumbling with business cards or typing contact info. Generate your unique QR code 
-                and let others scan it to instantly connect. Fast, seamless, and perfect for busy events.
+                Forget fumbling with business cards. Generate your unique QR code 
+                and let others scan it to enter flow instantly. Fast, seamless, and perfect for meaningful encounters.
               </p>
               <ul className="space-y-3">
-                {["Generate QR in seconds", "Scan to exchange profiles", "Auto-save connections", "Follow up effortlessly"].map((item, i) => (
+                {["Generate QR in seconds", "Scan to enter flow", "Auto-save connections", "Maintain continuity"].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span className="text-foreground">{item}</span>
@@ -185,14 +185,14 @@ export default function Landing() {
               />
             </div>
             <div className="space-y-6">
-              <Badge variant="outline">Stay Engaged</Badge>
-              <h2 className="text-4xl lg:text-5xl font-bold">Daily Actions & Streaks</h2>
+              <Badge variant="outline">Promise Tracker</Badge>
+              <h2 className="text-4xl lg:text-5xl font-bold">Flow Streaks & Promises</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Turn networking into a habit. Log daily actions, maintain your streak, and compete on the 
-                leaderboard. Gamification that drives real relationship building.
+                Turn connection into continuity. Log daily promises, maintain your flow streak, and rise on the 
+                flowboard. Keep every promise alive, every connection flowing.
               </p>
               <ul className="space-y-3">
-                {["Track networking activities", "Build consistency streaks", "See community progress", "Earn recognition"].map((item, i) => (
+                {["Track promises kept", "Build flow streaks", "See community momentum", "Earn flow recognition"].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span className="text-foreground">{item}</span>
@@ -207,14 +207,14 @@ export default function Landing() {
       {/* CTA Section */}
       <section className="py-24 bg-gradient-to-br from-primary/5 via-accent/5 to-background">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
-          <h2 className="text-4xl lg:text-5xl font-bold">Ready to Network Smarter?</h2>
+          <h2 className="text-4xl lg:text-5xl font-bold">Ready to Enter Flow?</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of professionals making meaningful connections at events worldwide.
+            Join creators, leaders, and visionaries keeping the flow alive at events worldwide.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Link href="/app">
-              <Button size="lg" className="text-base px-8 py-6 h-auto" data-testid="button-cta-join">
-                Get Started Free
+              <Button size="lg" className="text-base px-8 py-6 h-auto rounded-full" data-testid="button-cta-join">
+                Enter Flow
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
@@ -227,17 +227,17 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">ALIGN</h3>
+              <h3 className="text-2xl font-bold tracking-wide">AMURA</h3>
               <p className="text-sm text-muted-foreground">
-                Transforming event networking through intentional connections.
+                Where connection becomes continuity.
               </p>
             </div>
             <div className="space-y-3">
               <h4 className="font-semibold">Product</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><Link href="/app" className="hover:text-foreground transition-colors">Features</Link></li>
-                <li><Link href="/app" className="hover:text-foreground transition-colors">How It Works</Link></li>
-                <li><Link href="/app" className="hover:text-foreground transition-colors">Pricing</Link></li>
+                <li><Link href="/app" className="hover:text-foreground transition-colors">Circles</Link></li>
+                <li><Link href="/app" className="hover:text-foreground transition-colors">Organizers</Link></li>
               </ul>
             </div>
             <div className="space-y-3">
@@ -258,7 +258,7 @@ export default function Landing() {
             </div>
           </div>
           <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-            <p>© 2025 ALIGN. Built for meaningful connections.</p>
+            <p>© 2025 AMURA. Keep the flow alive.</p>
           </div>
         </div>
       </footer>

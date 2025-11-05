@@ -1,24 +1,59 @@
-# ALIGN - Design Guidelines
+# AMURA - Design Guidelines
 
-## Design Approach: Reference-Based (Modern Social + Productivity Hybrid)
+## Brand Identity
 
-Drawing inspiration from **Linear** (clean, purposeful UI), **Notion** (intuitive information architecture), and **LinkedIn** (professional networking aesthetic). This creates a trustworthy, energetic platform that balances social connection with productivity-focused clarity.
+**Name:** AMURA  
+**Tagline:** Keep the flow alive.  
+**Essence:** Connection, continuity, integrity, evolution.  
+**Mission:** Transform networking into flow — where promises become progress and connections become continuity.  
+**Symbolism:** Inspired by "Amaru," the Inca serpent representing wisdom and connection between worlds.  
+**Tone:** Premium, conscious, minimalist, warm, futuristic.
 
-**Core Principle:** Facilitate meaningful connections through clarity, not clutter. Every element should reduce friction in the networking process.
+**Design Approach:** Modern luxury meets ancient wisdom. Drawing inspiration from **Notion** (clarity), **Tesla** (premium minimalism), and **Calm** (warmth + purpose). This creates a high-end, flow-driven platform that transforms connection into continuity.
+
+**Core Principle:** Facilitate meaningful flow through elegance, not excess. Every element should amplify the journey from promise to progress.
+
+---
+
+## Color System
+
+**Primary Palette:**
+- **Cosmic Black:** `#0B0E12` (primary background)
+- **Indigo:** `#3F00FF` (gradient start, primary actions)
+- **Teal:** `#00E8C2` (gradient end, vitality)
+- **Accent Gold:** `#E2B857` (subtle highlights, premium touches)
+
+**Text Colors:**
+- **Light:** `#EAEAEA` (primary text)
+- **Muted:** `#8A8F98` (secondary text)
+- **Bright:** `#FFFFFF` (emphasis)
+
+**Gradient System:**
+- **Primary Gradient:** `linear-gradient(135deg, #3F00FF 0%, #00E8C2 100%)` (indigo → teal)
+- **Gold Accent Gradient:** `linear-gradient(135deg, #E2B857 0%, #FFD700 100%)` (subtle vitality)
+- **Button Hover Glow:** Combine teal + gold with blur for premium feel
+
+**Usage:**
+- Backgrounds: Cosmic black base
+- Primary CTAs: Indigo→Teal gradient
+- Accents: Gold for highlights, badges, streaks
+- Cards: Subtle elevation with gradient borders
 
 ---
 
 ## Typography System
 
-**Font Stack:** Inter (primary), system-ui fallback via Google Fonts CDN
+**Font Stack:** Inter (primary), Satoshi (alternate), system-ui fallback via Google Fonts CDN
+
+**Brand Wordmark:** AMURA (always ALL CAPS for brand name)
 
 **Hierarchy:**
-- **Headlines (H1):** 4xl to 6xl, font-bold, tight leading (0.95-1.0) for impact
+- **Headlines (H1):** 4xl to 6xl, font-bold (700-800), tight leading (0.95-1.0), letter-spacing: 0.5-1px
 - **Subheadlines (H2):** 2xl to 3xl, font-semibold, standard leading
-- **Section Headers (H3):** xl to 2xl, font-semibold
-- **Body Text:** base to lg, font-normal, relaxed leading (1.6) for readability
-- **Micro Copy (labels, tags):** sm to xs, font-medium, uppercase with tracking-wide for tags
-- **CTAs:** base to lg, font-semibold
+- **Section Headers (H3):** xl to 2xl, font-semibold, letter-spacing: 0.5px
+- **Body Text:** base to lg, font-normal (400-500), relaxed leading (1.6)
+- **Micro Copy:** sm to xs, font-medium, uppercase with tracking-wide for labels
+- **CTAs:** base to lg, font-semibold (600)
 
 ---
 
@@ -39,34 +74,37 @@ Drawing inspiration from **Linear** (clean, purposeful UI), **Notion** (intuitiv
 ## Landing Page Structure
 
 **1. Hero Section (80vh)**
-- Split layout: Left = headline + value prop + dual CTAs, Right = hero image showing people networking/connecting
-- Headline dominates (text-5xl lg:text-6xl), subtext below (text-xl)
-- Primary CTA: "Join Event Room" (prominent), Secondary: "Learn More"
-- Include social proof badge beneath CTAs: "1,000+ connections made at 50+ events"
+- Headline: "Keep the flow alive."
+- Subtitle: "AMURA turns connection into continuity — where promises become progress, and every encounter fuels your evolution."
+- Primary CTA: "Join AMURA" (gradient button with glow)
+- Secondary CTA: "Host with AMURA" (outline with blur background)
+- Background: Subtle particle/light-flow animation behind text
+- Include social proof: "Keeping flow alive at 50+ events"
 
-**2. How It Works (3-column grid lg:grid-cols-3)**
-- Step-by-step visual cards with large numbers, icons, and descriptions
-- Icons from Heroicons (outline style)
+**2. How It Works (3-column grid)**
+- Step cards with gradient borders
+- Flow-driven language throughout
+- Icons: Lucide React (consistent with app)
 
 **3. Features Showcase (Alternating 2-column sections)**
-- Feature 1: Profile & Offer/Ask (image left, text right)
-- Feature 2: QR Connect (text left, image right)
-- Feature 3: Daily Actions & Leaderboard (image left, text right)
-- Each section includes screenshot/mockup placeholder
+- Feature 1: "Flow Instantly" (instant connection via QR)
+- Feature 2: "Amura Circles" (event spaces reimagined)
+- Feature 3: "Promise Tracker" (momentum through action)
+- Feature 4: "Flow Streaks" (gamified continuity)
+- Each with gradient accent on image side
 
-**4. Social Proof (3-column testimonial cards)**
-- Avatar + quote + name/role format
-- Subtle elevation with rounded-xl cards
+**4. About Section**
+- "Amura is the bridge between action and intention."
+- "Inspired by ancient wisdom and modern design, it transforms how we connect, follow through, and grow together."
+- "Every promise kept. Every connection alive."
 
-**5. CTA Section (centered, py-20)**
-- Reinforced value proposition + large primary button
-- Include secondary link: "For Event Organizers →"
+**5. CTA Section**
+- Reinforced mission + large gradient CTA
+- Link: "For Circle Organizers →"
 
-**6. Footer (multi-column grid-cols-4)**
-- Column 1: Brand + tagline
-- Column 2: Product links
-- Column 3: Resources
-- Column 4: Newsletter signup form + social icons
+**6. Footer**
+- "© 2025 AMURA. Keep the flow alive."
+- Navigation: Home | Features | Circles | Organizers | Login
 
 ---
 
@@ -74,131 +112,177 @@ Drawing inspiration from **Linear** (clean, purposeful UI), **Notion** (intuitiv
 
 **Navigation Bar:**
 - Sticky top with backdrop-blur-lg
-- Logo left, navigation center (Rooms, Profile, Connections), user avatar/menu right
+- Logo left (AMURA wordmark), navigation center (Circles, Your Field, Flowboard)
+- User avatar/menu right
 - Mobile: Hamburger menu with slide-out drawer
 
-**Room View:**
-- Header: Room name + participant count + "Share Room" button
-- Tabbed interface: "Participants" | "Activity Feed" | "Leaderboard"
-- Participant grid: 2-column mobile, 3-4 column desktop card layout
+**Circle View (formerly Room):**
+- Header: Circle name + flow count (participants) + "Share Circle" button
+- Tabbed interface: "Flow" | "Activity" | "Flowboard"
+- Participant grid: 2-column mobile, 3-4 column desktop
 
 **Profile Cards:**
-- Compact card design with avatar, name, and role at top
-- "Offer" and "Ask" sections clearly labeled with distinct styling
-- Action buttons row at bottom: "Connect" | "View QR" | "View Full Profile"
-- Hover state: subtle lift (shadow-lg transition)
+- Compact design with avatar, name, role
+- "Offer" and "Ask" sections with gradient dividers
+- Action buttons: "Connect" | "View QR" | "Your Field"
+- Hover: gradient glow effect (teal + gold)
 
-**Profile Creation Form:**
-- Single-column centered layout (max-w-2xl)
-- Grouped sections with clear labels
-- Large textarea fields for Offer/Ask (h-32)
-- Links section with add/remove capability
-- Progress indicator if multi-step
+**Profile Creation (Your Field):**
+- Single-column centered (max-w-2xl)
+- Grouped sections with premium feel
+- Large textareas for Offer/Ask
+- Gold accents on focus states
 
 **QR Code Modal:**
-- Centered overlay with backdrop-blur
-- Large QR code display (w-64 h-64)
-- User info below: name + offer snippet
-- Download/Share buttons
+- Centered overlay with gradient border
+- Large QR display
+- User info with gradient text treatment
+- Download/Share buttons with glow
 
-**Activity Feed:**
-- Timeline-style cards with avatar, name, timestamp
-- Action text with emphasized keywords
-- Like/comment interactions if applicable
+**Promise Feed (Activity):**
+- Timeline cards with gradient left border
+- Avatar + name + timestamp
+- Promise text with emphasized keywords
+- Subtle hover elevation
 
-**Leaderboard:**
-- Ranked table with position numbers prominently displayed
-- Columns: Rank | Avatar+Name | Streak Count | Actions This Week
-- Top 3 highlighted with special treatment (subtle glow/border)
+**Flowboard (Leaderboard):**
+- Ranked table with gradient position badges
+- Columns: Rank | Avatar+Name | Flow Streak | Promises This Week
+- Top 3: Special gold/teal gradient highlights
+- Premium card treatment
 
 ---
 
 ## Component Design Patterns
 
 **Buttons:**
-- Primary: Solid fill, rounded-lg, px-6 py-3, font-semibold
-- Secondary: Outline style with border-2, same padding
-- Tertiary: Text-only with subtle hover underline
-- Icon buttons: Square or circle with p-2 to p-3
+- Primary: Gradient fill (indigo→teal), rounded-full (pill shape), px-6 py-3, font-semibold, hover glow
+- Secondary: Outline with gradient border, backdrop-blur, same padding
+- Tertiary: Text with gradient on hover
+- Icon buttons: Circular with gradient on hover
 
 **Input Fields:**
-- Rounded-lg borders, px-4 py-3, focus states with ring
-- Labels above with text-sm font-medium, mb-2
-- Helper text below in text-sm
+- Rounded-lg borders, px-4 py-3
+- Focus: Gradient ring effect
+- Labels: text-sm font-medium with gold accent
+- Placeholder: Muted text
 
 **Cards:**
-- Rounded-xl with subtle shadow (shadow-sm default, shadow-lg on hover)
+- Rounded-xl with subtle gradient border or shadow
 - Padding: p-6 standard, p-4 compact
-- Border or subtle background differentiation
+- Hover: Teal/gold glow (subtle)
+- Background: Slightly elevated from cosmic black
 
 **Badges/Tags:**
 - Rounded-full px-3 py-1, text-xs font-medium uppercase
-- Use for room types, user roles, streak indicators
+- Gradient backgrounds for streaks, gold for achievements
+- Use for circle types, flow streaks, promise counts
+
+---
+
+## UX Tone & Microcopy
+
+**Flow-Driven Language:**
+- "Join Room" → "Enter Flow"
+- "Create Event" → "Open Circle"
+- "Add Action" → "Log Promise"
+- "Leaderboard" → "Flowboard"
+- "Profile" → "Your Field"
+- "Event Rooms" → "Amura Circles"
+- "Participants" → "Flow" (as in "45 in flow")
+- "Actions This Week" → "Promises Kept"
+
+**Copy Tone:**
+- Human, warm, conscious
+- Slightly poetic but never pretentious
+- Focus on continuity, flow, integrity
+- Avoid corporate/robotic language
 
 ---
 
 ## Images Strategy
 
-**Landing Page Images:**
-1. **Hero Image:** Professional networking scene - people genuinely connecting at an event (right side of hero split layout)
-2. **Feature Screenshots:** Mockups of app interface showing profile view, QR scanner, and activity feed
-3. **Testimonial Avatars:** Circular headshots (w-12 h-12 rounded-full)
+**Landing Page:**
+1. Hero: People in genuine flow/connection (soft gradient overlay)
+2. Feature mockups: App interface with gradient accents
+3. Testimonial avatars: Circular with gradient rings
 
-**Application Images:**
-- User avatars throughout (default placeholder if none provided)
-- QR code generation (dynamic)
+**Application:**
+- User avatars with subtle gradient borders
+- QR codes with AMURA branding
+- Default placeholders with gradient backgrounds
 
-**Image Treatment:** All photos with subtle rounded corners (rounded-lg to rounded-xl), proper aspect ratios maintained
+**Image Treatment:** Rounded corners, gradient overlays where needed, premium feel throughout
 
 ---
 
 ## Iconography
 
-**Library:** Heroicons via CDN (outline style primary, solid for emphasis)
+**Library:** Lucide React (consistent, modern, clean)
 
 **Usage:**
-- Navigation items
-- Feature callouts
-- Form field prefixes
-- Action buttons (plus, share, edit icons)
-- Social media links
+- Navigation (Home, Compass for Circles, User for Field)
+- Features (Zap, Users, Target, TrendingUp)
+- Actions (Plus, Share2, Edit, Download)
+- Premium: Sparkles for achievements, Crown for top streaks
+
+---
+
+## Animation & Polish
+
+**Gradient Shimmer:**
+- Subtle animation on CTA buttons
+- Use on hover states for premium feel
+
+**Hover Effects:**
+- Soft glow (teal + gold blur)
+- Subtle scale (scale-105)
+- Gradient border reveal
+
+**Loading States:**
+- Skeleton screens with gradient animation
+- Smooth transitions (duration-200 ease-in-out)
+
+**Optional Premium Touches:**
+- Particle/light-flow animation on hero
+- Energy pulse on AMURA logo load
+- Smooth gradient transitions on interactions
 
 ---
 
 ## Responsive Behavior
 
 **Breakpoints:**
-- Mobile-first approach (base styles for mobile)
+- Mobile-first (base for mobile)
 - md: 768px (tablets)
 - lg: 1024px (desktop)
-- xl: 1280px (large desktop)
+- xl: 1280px (large screens)
 
 **Key Adaptations:**
 - Hero: Stack vertically on mobile, side-by-side lg+
-- Navigation: Hamburger menu on mobile, full nav bar lg+
-- Grids: Single column mobile → 2-3 columns tablet → 3-4 columns desktop
-- Typography: Scale down one size on mobile (text-4xl → text-3xl)
+- Navigation: Hamburger mobile, full nav lg+
+- Grids: Single column → 2-3 → 3-4 columns
+- Typography: Scale appropriately per breakpoint
 
 ---
 
-## Interaction Patterns
+## Accessibility
 
-**Minimal Animations:**
-- Hover states: Subtle scale (scale-105) or shadow changes
-- Transitions: transition-all duration-200 ease-in-out
-- Page transitions: Fade or slide for route changes
-- Loading states: Simple spinner or skeleton screens
-
-**No Distracting Motion:** Focus on snappy, purposeful interactions
+- Semantic HTML
+- ARIA labels on all interactive elements
+- Keyboard navigation (focus states with gradient rings)
+- High contrast ratios (WCAG AA minimum)
+- Touch targets: 44x44px minimum
+- Reduced motion support
 
 ---
 
-## Accessibility Standards
+## Meta & SEO
 
-- Semantic HTML throughout
-- ARIA labels on interactive elements
-- Keyboard navigation support (focus states with ring-2)
-- Sufficient contrast ratios
-- Touch targets minimum 44x44px for mobile
+- **Title:** AMURA – Keep the flow alive
+- **Description:** AMURA is the modern connection platform for creators, leaders, and visionaries. Keep promises visible, relationships alive, and your flow in motion.
+- **Favicon:** AMURA symbol (loop A mark)
 
-This design creates a **modern, trustworthy networking platform** that feels both professional and approachable, optimized for the unique in-person event context while scaling for digital connection.
+---
+
+This design creates a **premium, flow-driven networking platform** that feels both ancient and futuristic — where connection becomes continuity and every promise becomes progress.

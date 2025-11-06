@@ -6,9 +6,17 @@ if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-// Postgres library can handle URL-encoded passwords correctly
-// Just pass the DATABASE_URL directly - the library will parse it
-export const client = postgres(process.env.DATABASE_URL, { 
-  prepare: false  // Disable prepared statements for Supabase transaction pooler compatibility
+/**
+ * STABLE DATABASE CONNECTION - DO NOT MODIFY
+ *
+ * Uses DATABASE_URL directly - the postgres library handles URL parsing and encoding.
+ * Requires DATABASE_URL secret in format:
+ * postgresql://user:password@host:port/database
+ *
+ * Password should be URL-encoded if it contains special characters.
+ * Example: MyPass!@# becomes MyPass%21%40%23
+ */
+export const client = postgres(process.env.DATABASE_URL, {
+  prepare: false  // Required for Supabase transaction pooler
 });
 export const db = drizzle(client, { schema });

@@ -1,14 +1,11 @@
-import { drizzle } from "drizzle-orm/neon-serverless";
-import { Pool, neonConfig } from "@neondatabase/serverless";
-import ws from "ws";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "@shared/schema";
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-// Configure WebSocket for Neon
-neonConfig.webSocketConstructor = ws;
-
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle(pool, { schema });
+// Disable prepared statements for Supabase transaction pooler compatibility
+export const client = postgres(process.env.DATABASE_URL, { prepare: false });
+export const db = drizzle(client, { schema });

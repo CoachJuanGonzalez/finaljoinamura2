@@ -121,17 +121,19 @@ export class DbStorage implements IStorage {
 
   async getProfilesByRoom(roomId: string): Promise<ProfileWithUser[]> {
     const results = await db
-      .select()
-      .from(profiles)
-      .leftJoin(users, eq(profiles.userId, users.id))
-      .where(eq(profiles.roomId, roomId));
+      .select({
+        profile: profiles,
+        user: users,
+      })
+      .from(memberships)
+      .innerJoin(profiles, eq(memberships.userId, profiles.userId))
+      .innerJoin(users, eq(profiles.userId, users.id))
+      .where(eq(memberships.roomId, roomId));
 
-    return results
-      .filter((r) => r.users !== null)
-      .map((r) => ({
-        ...r.profiles,
-        user: r.users!,
-      }));
+    return results.map((r) => ({
+      ...r.profile,
+      user: r.user,
+    }));
   }
 
   async getAllProfiles(): Promise<ProfileWithUser[]> {

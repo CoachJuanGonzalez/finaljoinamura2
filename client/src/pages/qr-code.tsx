@@ -1,26 +1,35 @@
 import { useEffect, useRef } from "react";
+import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Download, Share2, Copy } from "lucide-react";
+import { Download, Share2, Copy, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/lib/auth-context";
 import QRCode from "qrcode";
+import type { Profile } from "@shared/schema";
 
 export default function QRCodePage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
+  const { user, isLoading: authLoading } = useAuth();
 
-  // Mock user data - will be replaced with real auth
-  const currentUser = {
-    id: "demo-user-id",
-    displayName: "Demo User",
-    email: "demo@align.app",
-    photoURL: null,
-    role: "Product Manager",
-    company: "TechCorp",
-  };
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      setLocation("/auth");
+    }
+  }, [authLoading, user, setLocation]);
 
-  const profileUrl = `${window.location.origin}/app/profile/${currentUser.id}`;
+  // Fetch user's profile
+  const { data: profile, isLoading: profileLoading } = useQuery<Profile>({
+    queryKey: [`/api/profiles/user/${user?.id}`],
+    enabled: !!user?.id,
+  });
+
+  const profileUrl = user ? `${window.location.origin}/app/profile/${user.id}` : "";
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -36,10 +45,10 @@ export default function QRCodePage() {
   }, [profileUrl]);
 
   const handleDownload = () => {
-    if (canvasRef.current) {
+    if (canvasRef.current && user) {
       const url = canvasRef.current.toDataURL("image/png");
       const link = document.createElement("a");
-      link.download = `align-qr-${currentUser.displayName.replace(/\s+/g, "-").toLowerCase()}.png`;
+      link.download = `amura-qr-${user.displayName.replace(/\s+/g, "-").toLowerCase()}.png`;
       link.href = url;
       link.click();
       
@@ -59,10 +68,10 @@ export default function QRCodePage() {
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
+    if (navigator.share && user) {
       try {
         await navigator.share({
-          title: `Connect with ${currentUser.displayName} on ALIGN`,
+          title: `Connect with ${user.displayName} on AMURA`,
           text: "Scan my QR code to connect!",
           url: profileUrl,
         });
@@ -73,6 +82,15 @@ export default function QRCodePage() {
       handleCopyLink();
     }
   };
+
+  // Show loading state while checking authentication
+  if (authLoading || profileLoading || !user) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background py-12 px-6">
@@ -103,18 +121,20 @@ export default function QRCodePage() {
 
               <div className="flex items-center gap-4">
                 <Avatar className="w-16 h-16">
-                  <AvatarImage src={currentUser.photoURL || undefined} />
+                  <AvatarImage src={user.photoURL || undefined} />
                   <AvatarFallback className="text-lg">
-                    {currentUser.displayName.split(" ").map(n => n[0]).join("")}
+                    {user.displayName.split(" ").map(n => n[0]).join("")}
                   </AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="font-semibold text-lg" data-testid="text-user-name">
-                    {currentUser.displayName}
+                    {user.displayName}
                   </p>
-                  <p className="text-sm text-muted-foreground" data-testid="text-user-role">
-                    {currentUser.role} at {currentUser.company}
-                  </p>
+                  {profile?.role && profile?.company && (
+                    <p className="text-sm text-muted-foreground" data-testid="text-user-role">
+                      {profile.role} at {profile.company}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

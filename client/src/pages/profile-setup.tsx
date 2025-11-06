@@ -13,6 +13,7 @@ import { insertProfileSchema, type Profile } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Plus, X, ArrowRight, Loader2 } from "lucide-react";
 import { z } from "zod";
+import { useAuth } from "@/lib/auth-context";
 
 const profileFormSchema = insertProfileSchema.extend({
   bio: z.string().optional(),
@@ -26,14 +27,19 @@ export default function ProfileSetup() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [links, setLinks] = useState<string[]>([""]);
+  const { user, isLoading: authLoading } = useAuth();
 
-  // For demo purposes, use a fixed demo user ID
-  // In production, this would come from Firebase Auth
-  const currentUserId = "user-1";
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      setLocation("/auth");
+    }
+  }, [authLoading, user, setLocation]);
 
   // Check if profile already exists
   const { data: existingProfile } = useQuery<Profile>({
-    queryKey: [`/api/profiles/user/${currentUserId}`],
+    queryKey: [`/api/profiles/user/${user?.id}`],
+    enabled: !!user?.id,
   });
 
   const form = useForm<ProfileFormData>({
@@ -67,15 +73,16 @@ export default function ProfileSetup() {
 
   const createProfileMutation = useMutation({
     mutationFn: async (data: ProfileFormData) => {
+      if (!user?.id) throw new Error("User not authenticated");
       const profileData = {
         ...data,
-        userId: currentUserId,
+        userId: user.id,
       };
       return await apiRequest("POST", "/api/profiles", profileData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/profiles"] });
-      queryClient.invalidateQueries({ queryKey: [`/api/profiles/user/${currentUserId}`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/profiles/user/${user?.id}`] });
       toast({
         title: "Profile created!",
         description: "Your profile has been created successfully.",
@@ -98,7 +105,7 @@ export default function ProfileSetup() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/profiles"] });
-      queryClient.invalidateQueries({ queryKey: [`/api/profiles/user/${currentUserId}`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/profiles/user/${user?.id}`] });
       toast({
         title: "Profile updated!",
         description: "Your profile has been updated successfully.",
@@ -140,6 +147,15 @@ export default function ProfileSetup() {
   };
 
   const isPending = createProfileMutation.isPending || updateProfileMutation.isPending;
+
+  // Show loading state while checking authentication
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background py-12 px-6">
